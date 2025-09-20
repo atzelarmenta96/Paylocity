@@ -1,0 +1,908 @@
+{
+	"info": {
+		"_postman_id": "aabe9c39-e100-40da-91b3-080b94e4ab7a",
+		"name": "Employess CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "16788583-aabe9c39-e100-40da-91b3-080b94e4ab7a"
+	},
+	"item": [
+		{
+			"name": "1. Create Employee - Valid Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "537e1d27-8c60-4470-9598-b11f6a66cc31",
+						"exec": [
+							"// Verificar código de estado\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verificar estructura de respuesta\r",
+							"pm.test(\"Response has correct structure\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property('id');\r",
+							"    pm.expect(response).to.have.property('firstName');\r",
+							"    pm.expect(response).to.have.property('lastName');\r",
+							"    pm.expect(response).to.have.property('dependants');\r",
+							"    pm.expect(response).to.have.property('salary');\r",
+							"    pm.expect(response).to.have.property('benefitsCost');\r",
+							"    pm.expect(response).to.have.property('net');\r",
+							"});\r",
+							"\r",
+							"// Verificar cálculos de beneficios\r",
+							"pm.test(\"Benefits calculations are correct\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    const gross = pm.response.json().gross;\r",
+							"    const dependants = pm.response.json().dependants;\r",
+							"\r",
+							"    const employeecost = 1000 // $1000 yearly for the employee\r",
+							"    const dependantscost = 500 * dependants ;\r",
+							"    const expectedBenefits = employeecost + dependantscost; // $1000 empleado + $1000 (2 dependientes)\r",
+							"    const paidchecks = 26;\r",
+							"    const benefictsmontlydeductions = expectedBenefits / paidchecks ; //    $2000 / 26\r",
+							"    const expectedNet =  gross - benefictsmontlydeductions.toFixed(4) ; //\r",
+							"    \r",
+							"    pm.expect(response.net).to.equal(expectedNet);\r",
+							"});\r",
+							"\r",
+							"// Guardar employeeId para pruebas posteriores\r",
+							"const employeeId = pm.response.json().id;\r",
+							"pm.environment.set(\"employeeId\", employeeId);\r",
+							"pm.environment.set(\"username\", pm.response.json()\r",
+							".username);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "49b074f9-d993-45df-946f-92c126b94913",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "5de3ecc6-fe82-459a-b52c-d25d46a722ac",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username\t}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"firstName\": \"Maríaa\",\r\n    \"lastName\": \"Gonzálezz\",\r\n    \"dependants\": 2\r\n    \r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.1 Create Employee - Missing Required Fields(last name)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1068764e-409a-4dbe-b0ca-69351f1b1ad8",
+						"exec": [
+							"pm.test(\"Should return error for missing required field\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "c0e527ed-711f-4a0b-879c-9478919af775",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username\t}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"firstName\": \"Juan2\",\r\n    \"dependants\": \"0\"\r\n    \r\n    \r\n    \r\n    // Falta username and dependants - debería fallar\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.2 Create Employee - Missing Required Fields(first name)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd80d32a-7aa8-4a19-8f8a-3963ea8ce756",
+						"exec": [
+							"pm.test(\"Should return error for missing required field\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "182ba07b-83e5-448a-be9e-42914b510bc4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \r\n    \"lastName\": \"gonzales3\",\r\n    \"dependants\": 2\r\n\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.2 Create Employee - Valid Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6f141f8-5dc1-4254-b85c-dad516bacf6e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "7464e4b6-e021-4e3f-9f43-8bcf829cfaca",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username\t}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"firstName\": \"Maríaaaa\",\r\n    \"lastName\": \"Gonzálezzzzz\",\r\n    \"username\": \"maria.gonzalez\",\r\n    \"dependants\": 10,\r\n    \"salary\": 2000  \r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Create Employee - Invalid Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3a77951-cc58-41fe-bd64-c58a92eca2ea",
+						"exec": [
+							"pm.test(\"Should return error for invalid data\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Dependants validation error message\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    const errorObject = response[0];\r",
+							"    const errorObject2 = response[1];\r",
+							"    const errorObject3 = response[2];\r",
+							"// Verificar el mensaje de error específico\r",
+							"    pm.expect(errorObject.errorMessage).to.equal('The field FirstName must be a string with a maximum length of 50.');\r",
+							"    pm.expect(errorObject2.errorMessage).to.equal('The field LastName must be a string with a maximum length of 50.');\r",
+							"    pm.expect(errorObject3.errorMessage).to.equal('The field Dependants must be between 0 and 32.');\r",
+							"\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "12ff7d33-1ecc-4347-8365-22da38629fbc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"NombreDemasiadoLargoQueExcedeLosCincuentaCaracteresPermitidos\",\r\n    \"lastName\": \"ApellidoDemasiadoLargoQueExcedeLosCincuentaCaracteresPermitidos\",\r\n    \"dependants\": -1000\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Get All Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "badfb191-d548-413b-ab8f-eff2e2435cf9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is JSON array\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains created employee\", function () {\r",
+							"    const employees = pm.response.json();\r",
+							"    const foundEmployee = employees.find(emp => emp.id === pm.environment.get(\"employeeId\"));\r",
+							"    pm.expect(foundEmployee).to.not.be.undefined;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "7f7f682c-6e08-40e1-b685-1ea7d4a7c314",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. Get Employee by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82fa8814-89b1-4038-b70e-573125038dfa",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Returns correct employee data\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.id).to.equal(pm.environment.get(\"employeeId\"));\r",
+							"    pm.expect(response.firstName).to.equal(\"María\");\r",
+							"    pm.expect(response.dependants).to.equal(2);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has read-only fields\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response).to.have.property('partitionKey');\r",
+							"    pm.expect(response).to.have.property('sortKey');\r",
+							"    pm.expect(response).to.have.property('gross');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a6d3329c-7cd4-4013-ad38-25274d5d1663",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/{{employeeId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. Get Non-Existent Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4953213a-b10d-4933-9b37-1f8b749cc705",
+						"exec": [
+							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "b1adc6ed-fe7c-41a8-ace3-ccbd3f957351",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username\t}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/{{non-existent-id-}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{non-existent-id-}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.2 Get Non-Existent Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "80c22d35-8bcc-4143-8328-b4897ed6c4b5",
+						"exec": [
+							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"    });"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a995add1-573c-4607-8433-176bcb070ba5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/{{wrongId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{wrongId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. Update Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7fa605b0-eb48-4810-ac48-fde0921c9971",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Employee data was updated\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    pm.expect(response.firstName).to.equal(\"Ana Maríaaa\");\r",
+							"    pm.expect(response.dependants).to.equal(3);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Benefits cost updated correctly\", function () {\r",
+							"    const response = pm.response.json();\r",
+							"    const gross = pm.response.json().gross;\r",
+							"    const dependants = pm.response.json().dependants;\r",
+							"\r",
+							"    const employeecost = 1000 // $1000 yearly for the employee\r",
+							"    const dependantscost = 500 * dependants ;\r",
+							"    const expectedBenefits = employeecost + dependantscost; // $1000 empleado + $1000 (2 dependientes)\r",
+							"    const paidchecks = 26;\r",
+							"    const benefictsmontlydeductions = expectedBenefits / paidchecks ; //    $2000 / 26\r",
+							"    const expectedNet =  gross - benefictsmontlydeductions.toFixed(4) ; //\r",
+							"    \r",
+							"    pm.expect(response.net).to.equal(expectedNet);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "66bfd06d-acfc-4ed1-9374-e53fae5de9d9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{employeeId}}\",\r\n    \"firstName\": \"Ana Maríaaa\",\r\n    \"lastName\": \"Gonzálezzz\",\r\n    \"username\": \"{{username}}\",\r\n    \"dependants\": 3,\r\n    \"salary\" : 52000\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Update Employee Without ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6402389b-2514-41d0-b8a9-340cb1749240",
+						"exec": [
+							"pm.test(\"Returns error for missing ID\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "e92d0ac6-26ad-4950-af9b-9c5786cc57ce",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"User\",\r\n    \"username\": \"test.user\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9. Delete Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6dc861ce-acaf-43cb-ba66-956233185b91",
+						"exec": [
+							"pm.test(\"Check employee deletion with promise\", function () {\r",
+							"    return new Promise((resolve, reject) => {\r",
+							"        pm.sendRequest({\r",
+							"            url: pm.environment.get(\"baseUrl\") + \"/api/Employees/\" + pm.environment.get(\"employeeIdd\"),\r",
+							"            method: 'GET',\r",
+							"            header: {\r",
+							"                'Authorization': pm.environment.get(\"authHeader\"),\r",
+							"                'Content-Type': 'application/json'\r",
+							"            }\r",
+							"        }, function (err, response) {\r",
+							"            if (err) {\r",
+							"                reject(err);\r",
+							"                return;\r",
+							"            }\r",
+							"            \r",
+							"            try {\r",
+							"                pm.expect(response.code).to.equal(404);\r",
+							"                resolve();\r",
+							"            } catch (assertError) {\r",
+							"                reject(assertError);\r",
+							"            }\r",
+							"        });\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "cabe74db-1a78-406e-9bef-c9c797b63c42",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/{{employeeIdd}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"{{employeeIdd}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. Delete Non-Existent Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7c37f65-8806-4718-8b34-876e23ec66d7",
+						"exec": [
+							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "62007220-2b8c-43f2-9afa-33cd90d791ce",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees/non-existent-id-12345",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees",
+						"non-existent-id-12345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.3 Create Employee - Missing Required Fields(dependants)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3df1c5b-fe8d-4a31-a59a-cbb7dff39b12",
+						"exec": [
+							"pm.test(\"Should return error for missing required field(Dependants)\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "a2f2e3ad-5841-42db-9b0c-3052e1553244",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"lastName\": \"gonzales3\",\r\n    \"firstName\": \"petro\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e5217a47-fdd8-4811-83d0-408e05b920d9",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b10c08a7-599f-4cc9-aabd-30a6591c816e",
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

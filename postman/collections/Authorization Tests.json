@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "ebc2456c-df3e-416e-8851-d3b8b5c97f38",
+		"name": "Authorization Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "16788583-ebc2456c-df3e-416e-8851-d3b8b5c97f38"
+	},
+	"item": [
+		{
+			"name": "1. Request Without Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "240ce491-92e9-48ae-ab73-7cbde163e410",
+						"exec": [
+							"pm.test(\"Returns 401 without authentication\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "6a85f9ed-3df1-44f9-8c64-2dd406d80334",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Request With Invalid Token",
+			"id": "7f677056-7f3a-4ba6-ba8c-166c40111830",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{wrong-password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{wrong-username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{WrongAuth}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
