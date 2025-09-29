@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "afbd69a6-daea-41bc-9aea-df86b1afe925",
+		"_postman_id": "22ee8d25-234b-413a-bc8d-aaaadaaa3145",
 		"name": "Pruebas",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "16788583-afbd69a6-daea-41bc-9aea-df86b1afe925"
+		"_uid": "16788583-22ee8d25-234b-413a-bc8d-aaaadaaa3145"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "536e60f7-92ab-4b38-8fed-5b5c4ca53a6c",
+						"id": "39ff08ab-d508-47e8-ad8c-4ad5ddeb1b34",
 						"exec": [
 							"// Pre-request Script CORREGIDO\r",
 							"pm.environment.set(\"authHeader\", \"Basic \" + pm.environment.get(\"authToken\"));\r",
@@ -25,7 +25,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "752bd427-6483-499a-b9a8-31ca966af028",
+						"id": "e0c5afa9-4325-435b-8920-cb4ec5e3bf10",
 						"exec": [
 							""
 						],
@@ -34,7 +34,7 @@
 					}
 				}
 			],
-			"id": "fe9334c1-8e6c-4624-a498-4c171788a12c",
+			"id": "33a9a7bc-02ef-4f54-9fed-07379baade60",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true,
 				"disabledSystemHeaders": {
@@ -98,7 +98,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "826fcf69-ec93-4956-938f-172ef49deb3a",
+						"id": "b933e207-ed43-43fd-84ba-e6d9ba0b31be",
 						"exec": [
 							"pm.test(\"Dependants validation error message\", function () {\r",
 							"    const response = pm.response.json();\r",
@@ -113,7 +113,7 @@
 					}
 				}
 			],
-			"id": "1adcd733-2c3b-4829-9d6f-5b6bb40ceec5",
+			"id": "c1feb1d3-7a21-49af-b813-31384057e9ef",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -148,7 +148,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "77faa9fd-8d70-431a-963d-e609e094b766",
+						"id": "f1bdb549-2112-4edb-ac11-d1ef6a7246c9",
 						"exec": [
 							"pm.test(\"Should return sucess\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -159,7 +159,7 @@
 					}
 				}
 			],
-			"id": "f35caa21-4d36-4ddc-a88a-cded4a49c5cd",
+			"id": "4a947b7e-6482-4bb4-967d-e079056ce231",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -194,7 +194,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "541208f6-23dc-4c5f-af41-5876fab3abc3",
+						"id": "83141ee2-5297-4cc6-ba21-398ff54be13e",
 						"exec": [
 							"pm.test(\"Should return sucess\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -205,7 +205,7 @@
 					}
 				}
 			],
-			"id": "15ffa9e4-65b4-4686-82e8-5ae4883f5ae6",
+			"id": "e24916d1-bbb6-4347-bda8-208841b2473b",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -240,7 +240,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "ad031768-2e21-422a-ae72-9a9c0f17aba4",
+						"id": "03036db4-41cd-41f2-89b2-22b6eb72446e",
 						"exec": [
 							"pm.test(\"Dependants validation error message\", function () {\r",
 							"    const response = pm.response.json();\r",
@@ -255,7 +255,7 @@
 					}
 				}
 			],
-			"id": "68d0af51-e5eb-4a99-ad14-5f149a912ee5",
+			"id": "ea87aa4b-652a-4ac0-a83e-d9d37d32e01d",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -304,7 +304,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "868ba83f-e8dc-455b-836e-a97347ba5ddc",
+				"id": "ae60275c-ca26-4475-a356-ca42bb99a6f1",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -316,7 +316,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "a7d61d02-fc62-445b-97b4-83b7dc623db8",
+				"id": "b3414da4-679d-44ac-8e85-94ea68c104d3",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [

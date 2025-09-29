@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b2d34891-ca6e-4868-8b12-d1b6b7813c7f",
+		"_postman_id": "338a1ae1-2fcd-446f-8d6c-950e7bf650f9",
 		"name": "Employess CRUD",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "16788583-b2d34891-ca6e-4868-8b12-d1b6b7813c7f"
+		"_uid": "16788583-338a1ae1-2fcd-446f-8d6c-950e7bf650f9"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "56576f38-e6c0-41ab-91f1-bd569ef84072",
+						"id": "88f17314-6d89-4105-aa8f-12a404b7c202",
 						"exec": [
 							"// Verificar código de estado\r",
 							"pm.test(\"Status code is 200\", function () {\r",
@@ -60,7 +60,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "853390ce-354c-4634-afce-8a927f4a3cba",
+						"id": "3650b08a-7597-4671-887d-8cf1f3645cbf",
 						"exec": [
 							""
 						],
@@ -69,7 +69,7 @@
 					}
 				}
 			],
-			"id": "59059b6c-6f11-49dc-9252-f8dc3b3f2f7b",
+			"id": "258356a5-b36d-4fa7-86db-e2313211110b",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -120,12 +120,77 @@
 			"response": []
 		},
 		{
+			"name": "1.2 Create Employee - Valid Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "82014712-fc62-4354-b7be-4958443b2aa9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "0fe35fa6-2482-48d6-8f17-f60b0c0aa97c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "{{username\t}}",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authHeader}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"firstName\": \"Maríaaaa\",\r\n    \"lastName\": \"Gonzálezzzzz\",\r\n    \"username\": \"maria.gonzalez\",\r\n    \"dependants\": 10,\r\n    \"salary\": 2000  \r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Employees",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "2.1 Create Employee - Missing Required Fields(last name)",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2b768826-bdec-4118-b787-dc8a45938832",
+						"id": "1a1e0ed0-1001-4026-9fc5-8ae659f9f61d",
 						"exec": [
 							"pm.test(\"Should return error for missing required field\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
@@ -136,7 +201,7 @@
 					}
 				}
 			],
-			"id": "290032c9-67aa-4638-bc81-0dc7eb49da28",
+			"id": "5fb75c6c-8658-4428-b330-0a0673a18a04",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -192,7 +257,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "40e6a56e-7737-4565-bda7-97ef636d2255",
+						"id": "b7f27b3e-7ef4-44bd-8307-573a9eca1468",
 						"exec": [
 							"pm.test(\"Should return error for missing required field\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
@@ -203,7 +268,7 @@
 					}
 				}
 			],
-			"id": "b95c86bb-fb2a-40e1-b5d5-ca181382ddb1",
+			"id": "1063b808-c5f4-4742-bd95-ebcde3c03d04",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -254,77 +319,12 @@
 			"response": []
 		},
 		{
-			"name": "1.2 Create Employee - Valid Data",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "161b549e-fb75-4950-a7d7-e166eaa6894a",
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"id": "5d821ca4-016e-45e7-b491-b50a7ac550da",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "{{username\t}}",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{authHeader}}",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\r\n{\r\n    \"firstName\": \"Maríaaaa\",\r\n    \"lastName\": \"Gonzálezzzzz\",\r\n    \"username\": \"maria.gonzalez\",\r\n    \"dependants\": 10,\r\n    \"salary\": 2000  \r\n}"
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/Employees",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"Employees"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "3. Create Employee - Invalid Data",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "9ba45898-fa2f-4c45-b8e2-e8436ae680b5",
+						"id": "cdb2f8bc-b377-44e5-9571-9b5af12041f8",
 						"exec": [
 							"pm.test(\"Should return error for invalid data\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
@@ -348,7 +348,7 @@
 					}
 				}
 			],
-			"id": "164de497-8f30-4f70-9d22-bbee8aaf18fa",
+			"id": "dd2d7501-eb0b-4313-b45e-09cc6199a30f",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -383,7 +383,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e86cd1a2-e249-4740-98c1-3e2bde75c3e1",
+						"id": "6e48c7ca-dd61-4ddf-9f38-769375f70b39",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -406,7 +406,7 @@
 					}
 				}
 			],
-			"id": "4caeee3e-c855-4888-a806-a0bb38fbc25c",
+			"id": "adc0b3ef-06ec-4f91-a2e4-838d8b6ceed8",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -436,7 +436,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "338bb65c-c9b9-4ccf-91ee-f2c72bb9c910",
+						"id": "03ff649d-b15b-4825-a64a-86932248a39c",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -461,7 +461,7 @@
 					}
 				}
 			],
-			"id": "e166a3b6-df2c-4f14-9db0-069772929592",
+			"id": "4485c0f4-b241-4922-b63c-a5a8ed6143f3",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -492,7 +492,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fda976bd-6bd8-4bed-82cd-192ad0e84d19",
+						"id": "1b36f735-1afe-4c87-b8c3-571da8cb8804",
 						"exec": [
 							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
 							"    pm.response.to.have.status(404);\r",
@@ -503,7 +503,7 @@
 					}
 				}
 			],
-			"id": "483ad977-de25-4b53-a5e3-84cdc638fcc5",
+			"id": "b4fdac82-24fa-4f34-85bc-4117facadbaf",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -565,7 +565,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c31a128a-d8af-49f2-9f4c-ba150191f011",
+						"id": "c5458667-72a4-4507-a5cb-3402018ddce1",
 						"exec": [
 							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
 							"    pm.response.to.have.status(404);\r",
@@ -576,7 +576,7 @@
 					}
 				}
 			],
-			"id": "fcd4741a-bf47-4b81-9166-812ee8d0fe1e",
+			"id": "b87f933a-f855-4881-b308-7027d5f9c2bc",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -603,7 +603,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9bf1c350-5a49-4e0a-b059-62bef491f5f5",
+						"id": "ed820bc2-e5a2-4519-8049-a473b462faf7",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -637,7 +637,7 @@
 					}
 				}
 			],
-			"id": "316e1239-8b57-4eaf-a3d1-be4967de5d9e",
+			"id": "d76e708b-bfc3-4f6f-91bc-0f35eff36948",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -672,7 +672,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3a2175b4-75f6-4544-81c3-febef929181a",
+						"id": "45f5c4d8-a76a-411f-af65-f0322fc171f7",
 						"exec": [
 							"pm.test(\"Returns error for missing ID\", function () {\r",
 							"    pm.response.to.have.status(405);\r",
@@ -683,7 +683,7 @@
 					}
 				}
 			],
-			"id": "7520dc18-8619-43e4-923b-9b2ccabb7439",
+			"id": "aa205675-2016-4598-92c8-5fafb3959a82",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -719,7 +719,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4c327753-47ab-4867-ba07-27db3b42636d",
+						"id": "7003bc1d-45fd-4426-ac44-26a5df8c83f3",
 						"exec": [
 							"pm.test(\"Check employee deletion with promise\", function () {\r",
 							"    return new Promise((resolve, reject) => {\r",
@@ -751,7 +751,7 @@
 					}
 				}
 			],
-			"id": "84462103-3184-49aa-8d3f-4a6d5d181cad",
+			"id": "e899c0a1-d962-470c-a525-7579237e3170",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -787,7 +787,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c266d1a5-fef0-41d5-9e52-e832eb3b52fc",
+						"id": "8b84feda-aeab-4f83-aef1-9dc2c2b5c97f",
 						"exec": [
 							"pm.test(\"Returns 404 for non-existent employee\", function () {\r",
 							"    pm.response.to.have.status(405);\r",
@@ -798,7 +798,7 @@
 					}
 				}
 			],
-			"id": "422d6936-0605-4179-b77a-d03159a0d815",
+			"id": "215c8ea6-6d3d-426c-86c8-9b30ae3446d4",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -825,7 +825,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8de56a89-d8c3-4f73-83b5-3152623cc06c",
+						"id": "584153cf-3f81-4188-9c11-48f975d35518",
 						"exec": [
 							"pm.test(\"Should return error for missing required field(Dependants)\", function () {\r",
 							"    pm.response.to.have.status(400);\r",
@@ -836,7 +836,7 @@
 					}
 				}
 			],
-			"id": "072de95f-e06b-46be-aeb4-5830c80a6266",
+			"id": "b38804d5-9e01-4af2-93d0-ace52dddbc08",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -885,7 +885,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "555620f7-4515-4eb0-b326-4ac25b306fd2",
+				"id": "8b3ab317-d9b7-4bdd-acfd-7e560a80c995",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [
@@ -896,7 +896,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "8011d84d-aaaf-4c58-8501-6d9889f427b2",
+				"id": "5047a068-823a-4c53-9bbf-ce3135c0e64f",
 				"type": "text/javascript",
 				"packages": {},
 				"exec": [

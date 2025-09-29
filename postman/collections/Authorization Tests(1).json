@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9930e4b1-88c1-4750-a469-2cb0a676dd65",
+		"_postman_id": "2e4474bf-cd71-48b4-9593-046202276924",
 		"name": "Authorization Tests",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "16788583-9930e4b1-88c1-4750-a469-2cb0a676dd65"
+		"_uid": "16788583-2e4474bf-cd71-48b4-9593-046202276924"
 	},
 	"item": [
 		{
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c46e8e93-bfb1-47b5-a4d7-d87bdb0beb1e",
+						"id": "f3adccf5-1a1c-4e4d-856e-c2244c4d9a56",
 						"exec": [
 							"pm.test(\"Returns 401 without authentication\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
@@ -23,7 +23,7 @@
 					}
 				}
 			],
-			"id": "c619058e-6de0-46fd-86da-86cc1e28843d",
+			"id": "97f754ba-161e-43b7-b501-053d3a4603b7",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -48,7 +48,7 @@
 		},
 		{
 			"name": "2. Request With Invalid Token",
-			"id": "4ab16ca2-6b66-41de-b6e2-1d423f72be36",
+			"id": "0f030067-3d6e-497e-b7be-64f39afaa39f",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
